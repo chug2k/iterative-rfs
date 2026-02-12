@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requests for Startups | Iterative</title>
+    <title>Requests for Startups | Y Combinator</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
         :root {
             --bg-color: #ffffff;
             --text-color: #111;
-            --link-color: #f60;
+            --link-color: #f60; /* YC Orange */
             --border-color: #eaeaea;
             --header-bg: #f6f6ef;
+            --logo-bg: #f60;
+            --transition-speed: 0.4s;
         }
 
         body {
@@ -22,27 +24,34 @@
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
+            transition: background-color var(--transition-speed);
+        }
+
+        /* Iterative Theme Variables */
+        body.mode-iterative {
+            --link-color: #d32f2f; /* Iterative Red */
+            --header-bg: #ffffff;
+            --logo-bg: #d32f2f;
+            --bg-color: #fafafa;
         }
 
         header {
             background-color: var(--header-bg);
-            padding: 2px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color var(--transition-speed), border-color var(--transition-speed);
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header-content {
+        .header-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 20px;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
         .logo {
@@ -53,37 +62,57 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
         }
 
         .logo-box {
-            background: #f60;
+            background: var(--logo-bg);
             color: white;
-            padding: 2px 6px;
+            padding: 4px 8px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 16px;
+            border-radius: 2px;
+            transition: background-color var(--transition-speed), transform 0.5s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+            min-height: 80vh;
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            position: relative;
         }
 
         .toggle-switch {
             display: flex;
             align-items: center;
             background: #e0e0e0;
-            border-radius: 20px;
-            padding: 2px;
+            border-radius: 24px;
+            padding: 3px;
             cursor: pointer;
             position: relative;
-            width: 160px;
-            height: 32px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            width: 180px;
+            height: 36px;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
         }
 
         .toggle-option {
             flex: 1;
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             z-index: 2;
             transition: color 0.3s ease;
-            color: #666;
+            color: #777;
             user-select: none;
         }
 
@@ -93,199 +122,277 @@
 
         .toggle-slider {
             position: absolute;
-            left: 2px;
-            top: 2px;
-            width: 78px;
-            height: 28px;
+            left: 3px;
+            top: 3px;
+            width: 88px;
+            height: 30px;
             background: white;
-            border-radius: 18px;
-            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             z-index: 1;
         }
 
-        .mode-iterative .toggle-slider {
-            transform: translateX(78px);
+        body.mode-iterative .toggle-slider {
+            transform: translateX(86px);
         }
 
+        /* Content Typography */
         h1 {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 800;
             margin-bottom: 20px;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
         }
 
         h2 {
             font-size: 24px;
             font-weight: 700;
-            margin-top: 40px;
+            margin-top: 50px;
             margin-bottom: 20px;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
         }
 
         h3 {
-            font-size: 20px;
+            font-size: 21px;
             font-weight: 600;
-            margin-top: 30px;
-            margin-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 8px;
+            color: #111;
         }
 
         p {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             font-size: 17px;
             color: #333;
+            line-height: 1.65;
         }
 
         .intro {
-            font-size: 18px;
+            font-size: 20px;
             line-height: 1.6;
             color: #555;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            font-weight: 400;
         }
 
         .author {
             font-size: 14px;
             color: #666;
             margin-bottom: 16px;
-            display: block;
-        }
-
-        .transition-content {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .transition-content.fading {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        /* Iterative specific styles override */
-        body.mode-iterative {
-            --link-color: #d32f2f; /* Iterative red-ish */
-            --header-bg: #fff;
-        }
-        
-        body.mode-iterative .logo-box {
-            background: #d32f2f;
+            display: inline-block;
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
         }
 
         a {
             color: var(--link-color);
             text-decoration: none;
+            transition: color 0.2s;
+            border-bottom: 1px solid transparent;
         }
 
         a:hover {
-            text-decoration: underline;
+            border-bottom-color: var(--link-color);
         }
+
+        /* Transition Effects */
+        .scramble-text {
+            display: inline-block;
+        }
+        
+        /* Subtle Entrance Animation */
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-enter {
+            animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
     </style>
 </head>
 <body class="mode-yc">
     <header>
-        <div class="header-content">
-            <a href="#" class="logo">
-                <span class="logo-box">Y</span>
+        <div class="header-inner">
+            <a href="#" class="logo" onclick="resetToYC(event)">
+                <span class="logo-box" id="logo-box">Y</span>
                 <span id="logo-text">Combinator</span>
             </a>
-            <div class="toggle-switch" onclick="toggleMode()">
-                <div class="toggle-slider"></div>
-                <div class="toggle-option active" id="opt-yc">YC</div>
-                <div class="toggle-option" id="opt-iterative">Iterative</div>
+            <div class="toggle-container">
+                <div class="toggle-switch" onclick="toggleMode()">
+                    <div class="toggle-slider"></div>
+                    <div class="toggle-option active" id="opt-yc">YC</div>
+                    <div class="toggle-option" id="opt-iterative">Iterative</div>
+                </div>
             </div>
         </div>
     </header>
 
     <div class="container">
-        <div id="content" class="transition-content">
+        <div id="content">
             <!-- Content injected via JS -->
         </div>
     </div>
 
     <script>
-        const contentYC = `
-            <h1>Requests for Startups</h1>
-            <p class="intro">RFS is our tradition of sharing ideas we'd like to see founders tackle. These represent just a fraction of what we fund — if one excites you, take it as extra validation to dive in, but you don't need to work on these ideas to apply to YC.</p>
-            
-            <h2>Spring 2026</h2>
-            <p>The way startups are built has shifted quickly. AI-native companies can now be built faster, cheaper, and with more ambition than ever. We're excited about a range of startup ideas that span AI-native workflows, new financial primitives, modernized industrial systems, and more.</p>
+        // Content Data
+        const contentYC = {
+            title: "Requests for Startups",
+            intro: "RFS is our tradition of sharing ideas we'd like to see founders tackle. These represent just a fraction of what we fund — if one excites you, take it as extra validation to dive in, but you don't need to work on these ideas to apply to YC.",
+            sections: [
+                {
+                    type: 'h2',
+                    text: 'Spring 2026'
+                },
+                {
+                    type: 'p',
+                    text: "The way startups are built has shifted quickly. AI-native companies can now be built faster, cheaper, and with more ambition than ever. We're excited about a range of startup ideas that span AI-native workflows, new financial primitives, modernized industrial systems, and more."
+                },
+                {
+                    type: 'idea',
+                    title: "Cursor for Product Managers",
+                    author: "By Andrew Miklas",
+                    body: [
+                        "Over the last few years, we've seen an explosion of AI tools for writing code. Cursor and Claude Code are great at helping teams build software once it's clear what needs to be built.",
+                        "But writing code is only part of building a product people want. The most important part is figuring out what to build in the first place! We think there's an opportunity to build a 'Cursor for product management': an AI-native system focused on helping teams figure out what to build, not just how to build it."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "AI-Native Hedge Funds",
+                    author: "By Charlie Holtz",
+                    body: [
+                        "The biggest funds in the world have been slow to adapt. I worked as a quant researcher at one of these funds, and when I asked compliance to let us use ChatGPT, I didn't even get a response.",
+                        "We've already got swarms of Claude agents writing our codebases. Imagine swarms of agents doing what hedge fund traders do now - combing through 10-Ks, earnings calls, and SEC filings. An AI-native hedge fund will be the first to do this well."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "AI-Native Agencies",
+                    author: "By Aaron Epstein",
+                    body: [
+                        "Agencies have always been crazy hard to scale. Low margins, slow manual work, and the only way to grow is to add more people. But AI changes this.",
+                        "Now instead of selling software to customers to help them do the work, you can charge way more by using the software yourself and selling them the finished product at 100x the price. Agencies of the future will look more like software companies, with software margins."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "Stablecoin Financial Services",
+                    author: "By Daivik Goel",
+                    body: [
+                        "Stablecoins are rapidly becoming critical infrastructure for global finance, yet much of the financial services layer remains unbuilt. The GENIUS and CLARITY Acts are placing stablecoins in a unique position between DeFi and TradFi.",
+                        "The regulatory window is open. The rails are being laid. It's the perfect time to build something that blurs the line between the two worlds."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "AI for Government",
+                    author: "By Tom Blomfield",
+                    body: [
+                        "Government desperately needs AI tools to deal with the huge increase that's coming down the line. We've seen hints of this digital government in places like Estonia, but we need to spread it to the rest of the world.",
+                        "This kind of startup is not for the faint of heart. Selling to government is extremely hard, but once you've figured out how to land your first customer, they tend to be very sticky."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "AI Guidance for Physical Work",
+                    author: "By David Lieb",
+                    body: [
+                        "Much of the AI conversation focuses on which desk jobs will get replaced. But for physical work—stuff like field services, manufacturing, healthcare—AI can't yet act in the world. What it can do is see, reason, and guide the human who does.",
+                        "Imagine wearing a small camera while an AI sees what you see and talks you through the job. Instead of needing months or years of training, workers can become effective immediately."
+                    ]
+                }
+            ]
+        };
 
-            <h3>Cursor for Product Managers</h3>
-            <span class="author">By Andrew Miklas</span>
-            <p>Over the last few years, we've seen an explosion of AI tools for writing code. Cursor and Claude Code are great at helping teams build software once it's clear what needs to be built.</p>
-            <p>But writing code is only part of building a product people want. The most important part is figuring out what to build in the first place! Today, teams use AI in isolated parts of this process, but there's no system that supports the full loop of product discovery.</p>
-            <p>We think there's an opportunity to build a "Cursor for product management": an AI-native system focused on helping teams figure out what to build, not just how to build it.</p>
+        const contentIterative = {
+            title: "Requests for Startups | Iterative (SEA Focus)",
+            intro: "In Southeast Asia, the opportunity isn't just about building 'AI for X'—it's about solving structural inefficiencies, bridging fragmented markets, and digitizing massive informal economies. While Silicon Valley focuses on frontier model capabilities, our biggest opportunities lie in <strong>application, distribution, and infrastructure</strong> that works in a high-growth, diverse, and cost-sensitive region.",
+            sections: [
+                {
+                    type: 'h2',
+                    text: 'Spring 2026 (SEA Edition)'
+                },
+                {
+                    type: 'p',
+                    text: "Here are the ideas we want to see founders tackle in SEA for our next batch."
+                },
+                {
+                    type: 'idea',
+                    title: "1. AI-Native Agencies for the Global Market",
+                    author: "Based on YC: AI-Native Agencies",
+                    body: [
+                        "<strong>The SEA Angle:</strong> Southeast Asia is already the back office of the world. From BPO call centers in the Philippines to dev shops in Vietnam, we have millions of skilled workers serving global clients. But the 'labor arbitrage' model is dying. The future is <strong>outcome arbitrage</strong>.",
+                        "We are looking for agencies that use AI not just to make their workers 10% faster, but to replace the 'hourly billing' model entirely. Think of a 'design firm' in Jakarta that delivers top-tier assets instantly using fine-tuned models. You can charge US/EU pricing while running on SEA cost structures + AI margins."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "2. Cross-Border Stablecoin Infrastructure",
+                    author: "Based on YC: Stablecoin Financial Services",
+                    body: [
+                        "<strong>The SEA Angle:</strong> In the US, stablecoins are a speculative asset. In Southeast Asia, they are a <strong>necessity</strong>. With fragmented currencies (IDR, VND, PHP, THB, SGD), high remittance costs, and difficult access to USD banking for SMEs, stablecoins are the most practical rail for B2B cross-border trade.",
+                        "We want to see startups building the 'boring' layer: compliant on/off ramps for local currencies, stablecoin-based payroll for remote workers, and SME trade financing settled in USDC."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "3. 'Cursor' for Operations & Logistics",
+                    author: "Based on YC: Cursor for Product Managers",
+                    body: [
+                        "<strong>The SEA Angle:</strong> The bottleneck in SEA isn't just software engineering product management—it's <strong>operations</strong>. 'Grab for X' models failed because managing thousands of drivers or agents is operationally brutal.",
+                        "We want an AI-native interface that helps Ops Managers in logistics, retail, and supply chain. Imagine a tool that ingests WhatsApp logs, driver location data, and inventory sheets to answer: <em>'Why is the Jakarta hub congested?'</em> in real-time."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "4. AI Guidance for the Blue-Collar Workforce",
+                    author: "Based on YC: AI Guidance for Physical Work",
+                    body: [
+                        "<strong>The SEA Angle:</strong> Southeast Asia is the factory of the world. We are interested in multimodal AI running on low-end Android phones (not Apple Vision Pros) that guides a junior technician in Vietnam to fix an industrial AC unit.",
+                        "This isn't about replacing workers; it's about upskilling a massive, young workforce to global standards instantly."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "5. Government Tech: The 'Leapfrog' Opportunity",
+                    author: "Based on YC: AI for Government",
+                    body: [
+                        "<strong>The SEA Angle:</strong> GovTech in the West is about replacing mainframes. In SEA, it's about replacing <strong>paper</strong>. We are looking for AI that handles the messiness of developing-world bureaucracy: digitizing handwritten records in varying dialects and automating permit approvals to reduce corruption."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "6. Vertical AI for the 'Informal' Economy",
+                    author: "Based on YC: General Vertical AI",
+                    body: [
+                        "<strong>The SEA Angle:</strong> Western Vertical AI targets lawyers. In SEA, the massive verticals are <strong>MSMEs</strong>. We want to see AI agents that live inside WhatsApp (the operating system of SEA business). An agent that handles orders, negotiates prices in local dialects, and manages ledger entries for a wholesaler in Tanah Abang."
+                    ]
+                },
+                {
+                    type: 'idea',
+                    title: "7. Finetuning & Data Infrastructure for Local Languages",
+                    author: "Based on YC: Make LLMs Easy to Train",
+                    body: [
+                        "<strong>The SEA Angle:</strong> LLMs are great at English but terrible at Tagalog-English code-switching or Thai legal jargon. We need the infrastructure layer that makes 'Thai-GPT' or 'Indo-LLM' viable for enterprise use. Startups that curate high-quality local datasets and build eval benchmarks for SEA languages."
+                    ]
+                }
+            ]
+        };
 
-            <h3>AI-Native Hedge Funds</h3>
-            <span class="author">By Charlie Holtz</span>
-            <p>The biggest funds in the world have been slow to adapt. I worked as a quant researcher at one of these funds, and when I asked compliance to let us use ChatGPT, I didn't even get a response.</p>
-            <p>We've already got swarms of Claude agents writing our codebases. Imagine swarms of agents doing what hedge fund traders do now - combing through 10-Ks, earnings calls, and SEC filings. An AI-native hedge fund will be the first to do this well.</p>
-
-            <h3>AI-Native Agencies</h3>
-            <span class="author">By Aaron Epstein</span>
-            <p>Agencies have always been crazy hard to scale. Low margins, slow manual work, and the only way to grow is to add more people. But AI changes this.</p>
-            <p>Now instead of selling software to customers to help them do the work, you can charge way more by using the software yourself and selling them the finished product at 100x the price. Agencies of the future will look more like software companies, with software margins.</p>
-
-            <h3>Stablecoin Financial Services</h3>
-            <span class="author">By Daivik Goel</span>
-            <p>Stablecoins are rapidly becoming critical infrastructure for global finance, yet much of the financial services layer remains unbuilt. The GENIUS and CLARITY Acts are placing stablecoins in a unique position between DeFi and TradFi.</p>
-            <p>The regulatory window is open. The rails are being laid. It's the perfect time to build something that blurs the line between the two worlds.</p>
-
-            <h3>AI for Government</h3>
-            <span class="author">By Tom Blomfield</span>
-            <p>Government desperately needs AI tools to deal with the huge increase that's coming down the line. We've seen hints of this digital government in places like Estonia, but we need to spread it to the rest of the world.</p>
-            <p>This kind of startup is not for the faint of heart. Selling to government is extremely hard, but once you've figured out how to land your first customer, they tend to be very sticky.</p>
-
-            <h3>AI Guidance for Physical Work</h3>
-            <span class="author">By David Lieb</span>
-            <p>Much of the AI conversation focuses on which desk jobs will get replaced. But for physical work—stuff like field services, manufacturing, healthcare—AI can't yet act in the world. What it can do is see, reason, and guide the human who does.</p>
-            <p>Imagine wearing a small camera while an AI sees what you see and talks you through the job. Instead of needing months or years of training, workers can become effective immediately.</p>
-        `;
-
-        const contentIterative = `
-            <h1>Requests for Startups | Iterative (SEA Focus)</h1>
-            <p class="intro">In Southeast Asia, the opportunity isn't just about building "AI for X"—it's about solving structural inefficiencies, bridging fragmented markets, and digitizing massive informal economies. While Silicon Valley focuses on frontier model capabilities, our biggest opportunities lie in <strong>application, distribution, and infrastructure</strong> that works in a high-growth, diverse, and cost-sensitive region.</p>
-
-            <h2>Spring 2026 (SEA Edition)</h2>
-            <p>Here are the ideas we want to see founders tackle in SEA for our next batch.</p>
-
-            <h3>1. AI-Native Agencies for the Global Market</h3>
-            <span class="author">Based on YC: AI-Native Agencies</span>
-            <p><strong>The SEA Angle:</strong> Southeast Asia is already the back office of the world. From BPO call centers in the Philippines to dev shops in Vietnam, we have millions of skilled workers serving global clients. But the "labor arbitrage" model is dying. The future is <strong>outcome arbitrage</strong>.</p>
-            <p>We are looking for agencies that use AI not just to make their workers 10% faster, but to replace the "hourly billing" model entirely. Think of a "design firm" in Jakarta that delivers top-tier assets instantly using fine-tuned models. You can charge US/EU pricing while running on SEA cost structures + AI margins.</p>
-
-            <h3>2. Cross-Border Stablecoin Infrastructure</h3>
-            <span class="author">Based on YC: Stablecoin Financial Services</span>
-            <p><strong>The SEA Angle:</strong> In the US, stablecoins are a speculative asset. In Southeast Asia, they are a <strong>necessity</strong>. With fragmented currencies (IDR, VND, PHP, THB, SGD), high remittance costs, and difficult access to USD banking for SMEs, stablecoins are the most practical rail for B2B cross-border trade.</p>
-            <p>We want to see startups building the "boring" layer: compliant on/off ramps for local currencies, stablecoin-based payroll for remote workers, and SME trade financing settled in USDC.</p>
-
-            <h3>3. "Cursor" for Operations & Logistics</h3>
-            <span class="author">Based on YC: Cursor for Product Managers</span>
-            <p><strong>The SEA Angle:</strong> The bottleneck in SEA isn't just software engineering product management—it's <strong>operations</strong>. "Grab for X" models failed because managing thousands of drivers or agents is operationally brutal.</p>
-            <p>We want an AI-native interface that helps Ops Managers in logistics, retail, and supply chain. Imagine a tool that ingests WhatsApp logs, driver location data, and inventory sheets to answer: <em>"Why is the Jakarta hub congested?"</em> in real-time.</p>
-
-            <h3>4. AI Guidance for the Blue-Collar Workforce</h3>
-            <span class="author">Based on YC: AI Guidance for Physical Work</span>
-            <p><strong>The SEA Angle:</strong> Southeast Asia is the factory of the world. We are interested in multimodal AI running on low-end Android phones (not Apple Vision Pros) that guides a junior technician in Vietnam to fix an industrial AC unit.</p>
-            <p>This isn't about replacing workers; it's about upskilling a massive, young workforce to global standards instantly.</p>
-
-            <h3>5. Government Tech: The "Leapfrog" Opportunity</h3>
-            <span class="author">Based on YC: AI for Government</span>
-            <p><strong>The SEA Angle:</strong> GovTech in the West is about replacing mainframes. In SEA, it's about replacing <strong>paper</strong>. We are looking for AI that handles the messiness of developing-world bureaucracy: digitizing handwritten records in varying dialects and automating permit approvals to reduce corruption.</p>
-
-            <h3>6. Vertical AI for the "Informal" Economy</h3>
-            <span class="author">Based on YC: General Vertical AI</span>
-            <p><strong>The SEA Angle:</strong> Western Vertical AI targets lawyers. In SEA, the massive verticals are <strong>MSMEs</strong>. We want to see AI agents that live inside WhatsApp (the operating system of SEA business). An agent that handles orders, negotiates prices in local dialects, and manages ledger entries for a wholesaler in Tanah Abang.</p>
-
-            <h3>7. Finetuning & Data Infrastructure for Local Languages</h3>
-            <span class="author">Based on YC: Make LLMs Easy to Train</span>
-            <p><strong>The SEA Angle:</strong> LLMs are great at English but terrible at Tagalog-English code-switching or Thai legal jargon. We need the infrastructure layer that makes "Thai-GPT" or "Indo-LLM" viable for enterprise use. Startups that curate high-quality local datasets and build eval benchmarks for SEA languages.</p>
-
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
-            <p><strong>Founders:</strong> If you are building these in Singapore, Jakarta, Ho Chi Minh City, Manila, Bangkok, or KL—we want to hear from you. <a href="#">Apply to Iterative</a>.</p>
-        `;
-
+        // State & Elements
         let isIterative = false;
         const contentDiv = document.getElementById('content');
         const logoText = document.getElementById('logo-text');
@@ -294,43 +401,143 @@
         const optIterative = document.getElementById('opt-iterative');
         const body = document.body;
 
-        // Initialize
-        contentDiv.innerHTML = contentYC;
+        // --- Render Functions ---
+
+        function render(data) {
+            let html = `<h1>${data.title}</h1>`;
+            html += `<p class="intro">${data.intro}</p>`;
+            
+            data.sections.forEach((section, index) => {
+                let delay = index * 0.05; // Staggered entry
+                if (section.type === 'h2') {
+                    html += `<h2 style="animation-delay: ${delay}s" class="animate-enter">${section.text}</h2>`;
+                } else if (section.type === 'p') {
+                    html += `<p style="animation-delay: ${delay}s" class="animate-enter">${section.text}</p>`;
+                } else if (section.type === 'idea') {
+                    html += `
+                        <div class="idea-block animate-enter" style="animation-delay: ${delay}s">
+                            <h3>${section.title}</h3>
+                            <span class="author">${section.author}</span>
+                            ${section.body.map(p => `<p>${p}</p>`).join('')}
+                        </div>
+                    `;
+                }
+            });
+
+            if (data === contentIterative) {
+                html += `
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 60px 0;">
+                    <p class="animate-enter" style="animation-delay: 0.5s"><strong>Founders:</strong> If you are building these in Singapore, Jakarta, Ho Chi Minh City, Manila, Bangkok, or KL—we want to hear from you. <a href="#">Apply to Iterative</a>.</p>
+                `;
+            }
+
+            contentDiv.innerHTML = html;
+        }
+
+        // --- Logic ---
+
+        function updateURL(mode) {
+            const url = new URL(window.location);
+            if (mode === 'iterative') {
+                url.searchParams.set('view', 'iterative');
+            } else {
+                url.searchParams.delete('view');
+            }
+            window.history.pushState({}, '', url);
+            document.title = mode === 'iterative' ? "Requests for Startups | Iterative" : "Requests for Startups | Y Combinator";
+        }
+
+        function setMode(mode) {
+            isIterative = (mode === 'iterative');
+            
+            // 1. Update Classes & Styles
+            if (isIterative) {
+                body.classList.remove('mode-yc');
+                body.classList.add('mode-iterative');
+                
+                logoBox.textContent = 'I';
+                logoText.textContent = 'Iterative';
+                
+                optYC.classList.remove('active');
+                optIterative.classList.add('active');
+            } else {
+                body.classList.remove('mode-iterative');
+                body.classList.add('mode-yc');
+                
+                logoBox.textContent = 'Y';
+                logoText.textContent = 'Combinator';
+
+                optIterative.classList.remove('active');
+                optYC.classList.add('active');
+            }
+
+            // 2. Render Content with Animation Reset
+            // We clear briefly to force re-animation
+            contentDiv.style.opacity = '0';
+            setTimeout(() => {
+                render(isIterative ? contentIterative : contentYC);
+                contentDiv.style.opacity = '1';
+                // Trigger scramble effect on Title
+                scrambleText(document.querySelector('h1'));
+            }, 200);
+
+            updateURL(mode);
+        }
 
         function toggleMode() {
-            isIterative = !isIterative;
-            
-            // Fade out
-            contentDiv.classList.add('fading');
-
-            setTimeout(() => {
-                // Update content and styles
-                if (isIterative) {
-                    contentDiv.innerHTML = contentIterative;
-                    body.classList.remove('mode-yc');
-                    body.classList.add('mode-iterative');
-                    
-                    logoBox.textContent = 'I';
-                    logoText.textContent = 'Iterative';
-                    
-                    optYC.classList.remove('active');
-                    optIterative.classList.add('active');
-                } else {
-                    contentDiv.innerHTML = contentYC;
-                    body.classList.remove('mode-iterative');
-                    body.classList.add('mode-yc');
-                    
-                    logoBox.textContent = 'Y';
-                    logoText.textContent = 'Combinator';
-
-                    optIterative.classList.remove('active');
-                    optYC.classList.add('active');
-                }
-
-                // Fade in
-                contentDiv.classList.remove('fading');
-            }, 300);
+            setMode(isIterative ? 'yc' : 'iterative');
         }
+
+        function resetToYC(e) {
+            e.preventDefault();
+            setMode('yc');
+        }
+
+        // --- Scramble Effect ---
+        function scrambleText(element) {
+            if (!element) return;
+            const originalText = element.innerText;
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+            let iterations = 0;
+            
+            const interval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (index < iterations) {
+                            return originalText[index];
+                        }
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    })
+                    .join("");
+                
+                if (iterations >= originalText.length) {
+                    clearInterval(interval);
+                }
+                
+                iterations += 1 / 2; // Speed of decoding
+            }, 30);
+        }
+
+        // --- Init ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const view = params.get('view');
+            
+            if (view === 'iterative') {
+                setMode('iterative');
+            } else {
+                setMode('yc');
+            }
+        });
+
+        // Handle Back/Forward buttons
+        window.addEventListener('popstate', () => {
+            const params = new URLSearchParams(window.location.search);
+            const view = params.get('view');
+            setMode(view === 'iterative' ? 'iterative' : 'yc');
+        });
+
     </script>
 </body>
 </html>
