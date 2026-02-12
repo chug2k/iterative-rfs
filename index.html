@@ -14,7 +14,7 @@
             --border-color: #eaeaea;
             --header-bg: #f6f6ef;
             --logo-bg: #f60;
-            --transition-speed: 0.4s;
+            --transition-speed: 0.3s;
         }
 
         body {
@@ -29,10 +29,10 @@
 
         /* Iterative Theme Variables */
         body.mode-iterative {
-            --link-color: #d32f2f; /* Iterative Red */
+            --link-color: #D32F2F; /* Iterative Red */
             --header-bg: #ffffff;
-            --logo-bg: #d32f2f;
-            --bg-color: #fafafa;
+            --logo-bg: #D32F2F;
+            --bg-color: #ffffff;
         }
 
         header {
@@ -62,21 +62,25 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .logo:hover {
-            transform: scale(1.02);
         }
 
         .logo-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
             background: var(--logo-bg);
             color: white;
-            padding: 4px 8px;
             font-weight: 700;
             font-size: 16px;
             border-radius: 2px;
-            transition: background-color var(--transition-speed), transform 0.5s ease;
+            transition: background-color var(--transition-speed);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .container {
@@ -87,21 +91,16 @@
         }
 
         /* Toggle Switch */
-        .toggle-container {
-            position: relative;
-        }
-
         .toggle-switch {
             display: flex;
             align-items: center;
-            background: #e0e0e0;
-            border-radius: 24px;
-            padding: 3px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 2px;
             cursor: pointer;
             position: relative;
-            width: 180px;
-            height: 36px;
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+            width: 160px;
+            height: 32px;
             transition: background-color 0.3s;
         }
 
@@ -109,32 +108,33 @@
             flex: 1;
             text-align: center;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             z-index: 2;
             transition: color 0.3s ease;
-            color: #777;
+            color: #888;
             user-select: none;
         }
 
         .toggle-option.active {
             color: #000;
+            font-weight: 600;
         }
 
         .toggle-slider {
             position: absolute;
-            left: 3px;
-            top: 3px;
-            width: 88px;
-            height: 30px;
+            left: 2px;
+            top: 2px;
+            width: 78px;
+            height: 28px;
             background: white;
-            border-radius: 20px;
-            transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             z-index: 1;
         }
 
         body.mode-iterative .toggle-slider {
-            transform: translateX(86px);
+            transform: translateX(78px);
         }
 
         /* Content Typography */
@@ -142,8 +142,8 @@
             font-size: 36px;
             font-weight: 800;
             margin-bottom: 20px;
-            letter-spacing: -0.8px;
-            line-height: 1.2;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
         }
 
         h2 {
@@ -153,26 +153,28 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
+            letter-spacing: -0.02em;
         }
 
         h3 {
-            font-size: 21px;
+            font-size: 20px;
             font-weight: 600;
             margin-top: 40px;
             margin-bottom: 8px;
             color: #111;
+            letter-spacing: -0.01em;
         }
 
         p {
             margin-bottom: 18px;
             font-size: 17px;
             color: #333;
-            line-height: 1.65;
+            line-height: 1.6;
         }
 
         .intro {
             font-size: 20px;
-            line-height: 1.6;
+            line-height: 1.5;
             color: #555;
             margin-bottom: 50px;
             font-weight: 400;
@@ -181,11 +183,8 @@
         .author {
             font-size: 14px;
             color: #666;
-            margin-bottom: 16px;
-            display: inline-block;
-            background: #f5f5f5;
-            padding: 4px 8px;
-            border-radius: 4px;
+            margin-bottom: 12px;
+            display: block;
             font-weight: 500;
         }
 
@@ -193,32 +192,34 @@
             color: var(--link-color);
             text-decoration: none;
             transition: color 0.2s;
-            border-bottom: 1px solid transparent;
         }
 
         a:hover {
-            border-bottom-color: var(--link-color);
+            text-decoration: underline;
         }
 
-        /* Transition Effects */
-        .scramble-text {
-            display: inline-block;
-        }
-        
-        /* Subtle Entrance Animation */
-        @keyframes slideUpFade {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Animation */
+        #content {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .animate-enter {
-            animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        .fade-out {
+            opacity: 0 !important;
+            transform: translateY(10px) !important;
+        }
+
+        /* Iterative SVG Logo */
+        .iterative-icon {
+            display: none;
+        }
+
+        body.mode-iterative .yc-icon {
+            display: none;
+        }
+        body.mode-iterative .iterative-icon {
+            display: block;
         }
 
     </style>
@@ -227,15 +228,18 @@
     <header>
         <div class="header-inner">
             <a href="#" class="logo" onclick="resetToYC(event)">
-                <span class="logo-box" id="logo-box">Y</span>
-                <span id="logo-text">Combinator</span>
-            </a>
-            <div class="toggle-container">
-                <div class="toggle-switch" onclick="toggleMode()">
-                    <div class="toggle-slider"></div>
-                    <div class="toggle-option active" id="opt-yc">YC</div>
-                    <div class="toggle-option" id="opt-iterative">Iterative</div>
+                <div class="logo-box">
+                    <span class="yc-icon">Y</span>
+                    <svg class="iterative-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L12 22" stroke="white" stroke-width="4" stroke-linecap="square"/>
+                    </svg>
                 </div>
+                <span id="logo-text" class="logo-text">Combinator</span>
+            </a>
+            <div class="toggle-switch" onclick="toggleMode()">
+                <div class="toggle-slider"></div>
+                <div class="toggle-option active" id="opt-yc">YC</div>
+                <div class="toggle-option" id="opt-iterative">Iterative</div>
             </div>
         </div>
     </header>
@@ -247,19 +251,12 @@
     </div>
 
     <script>
-        // Content Data
         const contentYC = {
             title: "Requests for Startups",
             intro: "RFS is our tradition of sharing ideas we'd like to see founders tackle. These represent just a fraction of what we fund — if one excites you, take it as extra validation to dive in, but you don't need to work on these ideas to apply to YC.",
             sections: [
-                {
-                    type: 'h2',
-                    text: 'Spring 2026'
-                },
-                {
-                    type: 'p',
-                    text: "The way startups are built has shifted quickly. AI-native companies can now be built faster, cheaper, and with more ambition than ever. We're excited about a range of startup ideas that span AI-native workflows, new financial primitives, modernized industrial systems, and more."
-                },
+                { type: 'h2', text: 'Spring 2026' },
+                { type: 'p', text: "The way startups are built has shifted quickly. AI-native companies can now be built faster, cheaper, and with more ambition than ever. We're excited about a range of startup ideas that span AI-native workflows, new financial primitives, modernized industrial systems, and more." },
                 {
                     type: 'idea',
                     title: "Cursor for Product Managers",
@@ -321,14 +318,8 @@
             title: "Requests for Startups | Iterative (SEA Focus)",
             intro: "In Southeast Asia, the opportunity isn't just about building 'AI for X'—it's about solving structural inefficiencies, bridging fragmented markets, and digitizing massive informal economies. While Silicon Valley focuses on frontier model capabilities, our biggest opportunities lie in <strong>application, distribution, and infrastructure</strong> that works in a high-growth, diverse, and cost-sensitive region.",
             sections: [
-                {
-                    type: 'h2',
-                    text: 'Spring 2026 (SEA Edition)'
-                },
-                {
-                    type: 'p',
-                    text: "Here are the ideas we want to see founders tackle in SEA for our next batch."
-                },
+                { type: 'h2', text: 'Spring 2026 (SEA Edition)' },
+                { type: 'p', text: "Here are the ideas we want to see founders tackle in SEA for our next batch." },
                 {
                     type: 'idea',
                     title: "1. AI-Native Agencies for the Global Market",
@@ -392,7 +383,6 @@
             ]
         };
 
-        // State & Elements
         let isIterative = false;
         const contentDiv = document.getElementById('content');
         const logoText = document.getElementById('logo-text');
@@ -401,21 +391,18 @@
         const optIterative = document.getElementById('opt-iterative');
         const body = document.body;
 
-        // --- Render Functions ---
-
         function render(data) {
             let html = `<h1>${data.title}</h1>`;
             html += `<p class="intro">${data.intro}</p>`;
             
-            data.sections.forEach((section, index) => {
-                let delay = index * 0.05; // Staggered entry
+            data.sections.forEach(section => {
                 if (section.type === 'h2') {
-                    html += `<h2 style="animation-delay: ${delay}s" class="animate-enter">${section.text}</h2>`;
+                    html += `<h2>${section.text}</h2>`;
                 } else if (section.type === 'p') {
-                    html += `<p style="animation-delay: ${delay}s" class="animate-enter">${section.text}</p>`;
+                    html += `<p>${section.text}</p>`;
                 } else if (section.type === 'idea') {
                     html += `
-                        <div class="idea-block animate-enter" style="animation-delay: ${delay}s">
+                        <div class="idea-block">
                             <h3>${section.title}</h3>
                             <span class="author">${section.author}</span>
                             ${section.body.map(p => `<p>${p}</p>`).join('')}
@@ -427,14 +414,12 @@
             if (data === contentIterative) {
                 html += `
                     <hr style="border: 0; border-top: 1px solid #eee; margin: 60px 0;">
-                    <p class="animate-enter" style="animation-delay: 0.5s"><strong>Founders:</strong> If you are building these in Singapore, Jakarta, Ho Chi Minh City, Manila, Bangkok, or KL—we want to hear from you. <a href="#">Apply to Iterative</a>.</p>
+                    <p><strong>Founders:</strong> If you are building these in Singapore, Jakarta, Ho Chi Minh City, Manila, Bangkok, or KL—we want to hear from you. <a href="#">Apply to Iterative</a>.</p>
                 `;
             }
 
             contentDiv.innerHTML = html;
         }
-
-        // --- Logic ---
 
         function updateURL(mode) {
             const url = new URL(window.location);
@@ -450,35 +435,34 @@
         function setMode(mode) {
             isIterative = (mode === 'iterative');
             
-            // 1. Update Classes & Styles
-            if (isIterative) {
-                body.classList.remove('mode-yc');
-                body.classList.add('mode-iterative');
-                
-                logoBox.textContent = 'I';
-                logoText.textContent = 'Iterative';
-                
-                optYC.classList.remove('active');
-                optIterative.classList.add('active');
-            } else {
-                body.classList.remove('mode-iterative');
-                body.classList.add('mode-yc');
-                
-                logoBox.textContent = 'Y';
-                logoText.textContent = 'Combinator';
+            // Fade out
+            contentDiv.classList.add('fade-out');
 
-                optIterative.classList.remove('active');
-                optYC.classList.add('active');
-            }
-
-            // 2. Render Content with Animation Reset
-            // We clear briefly to force re-animation
-            contentDiv.style.opacity = '0';
             setTimeout(() => {
-                render(isIterative ? contentIterative : contentYC);
-                contentDiv.style.opacity = '1';
-                // Trigger scramble effect on Title
-                scrambleText(document.querySelector('h1'));
+                if (isIterative) {
+                    body.classList.remove('mode-yc');
+                    body.classList.add('mode-iterative');
+                    
+                    logoText.textContent = 'Iterative';
+                    
+                    optYC.classList.remove('active');
+                    optIterative.classList.add('active');
+                    
+                    render(contentIterative);
+                } else {
+                    body.classList.remove('mode-iterative');
+                    body.classList.add('mode-yc');
+                    
+                    logoText.textContent = 'Combinator';
+
+                    optIterative.classList.remove('active');
+                    optYC.classList.add('active');
+                    
+                    render(contentYC);
+                }
+                
+                // Fade in
+                contentDiv.classList.remove('fade-out');
             }, 200);
 
             updateURL(mode);
@@ -493,33 +477,7 @@
             setMode('yc');
         }
 
-        // --- Scramble Effect ---
-        function scrambleText(element) {
-            if (!element) return;
-            const originalText = element.innerText;
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-            let iterations = 0;
-            
-            const interval = setInterval(() => {
-                element.innerText = originalText
-                    .split("")
-                    .map((letter, index) => {
-                        if (index < iterations) {
-                            return originalText[index];
-                        }
-                        return chars[Math.floor(Math.random() * chars.length)];
-                    })
-                    .join("");
-                
-                if (iterations >= originalText.length) {
-                    clearInterval(interval);
-                }
-                
-                iterations += 1 / 2; // Speed of decoding
-            }, 30);
-        }
-
-        // --- Init ---
+        // Init
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const view = params.get('view');
@@ -527,11 +485,10 @@
             if (view === 'iterative') {
                 setMode('iterative');
             } else {
-                setMode('yc');
+                render(contentYC); // Initial render without fade
             }
         });
 
-        // Handle Back/Forward buttons
         window.addEventListener('popstate', () => {
             const params = new URLSearchParams(window.location.search);
             const view = params.get('view');
